@@ -1,0 +1,43 @@
+{
+  "name": "genpark-agentic-multimodal-invoice-receipt-reconciler-skill",
+  "version": "1.0.0",
+  "description": "Autonomous Multi-Modal Invoice & Receipt Reconciler. Parses structured financial receipts, invoices, and bank statements, performs tolerance-based three-way reconciliation, detects tax calculation drift and duplicate claims, and synthesizes double-entry bookkeeping journal entries.",
+  "tools": [
+    {
+      "name": "reconcile_invoice_receipt",
+      "description": "Extract financial metadata, verify VAT/sales tax calculations, reconcile invoices against bank transaction feeds, and synthesize double-entry journal entries.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "parse_invoice_metadata",
+              "reconcile_against_bank_ledger",
+              "generate_accounting_journal_entry"
+            ],
+            "description": "Financial reconciliation action."
+          },
+          "invoice_data": {
+            "type": "object",
+            "description": "Invoice payload with vendor, total, tax, currency, and line items."
+          },
+          "bank_statement_transactions": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "description": "Bank ledger transaction feed."
+          },
+          "tolerance_usd": {
+            "type": "number",
+            "description": "Allowed currency rounding delta (default 0.05)."
+          }
+        },
+        "required": [
+          "action"
+        ]
+      }
+    }
+  ]
+}
